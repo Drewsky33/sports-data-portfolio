@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 from supabase import create_client, Client
+from urllib.parse import quote_plus
 
 # Load credentials from .env
 load_dotenv(override=True)
@@ -32,7 +33,7 @@ def get_engine():
     if not all([user, password, host, port, name]):
         raise ValueError("Missing database credentials in .env")
     
-    connection_string = f"postgresql://{user}:{password}@{host}:{port}/{name}"
+    connection_string = f"postgresql://{user}:{quote_plus(password)}@{host}:{port}/{name}"
     return create_engine(connection_string)
 
 # ── Connection test ──────────────────────────────────────────
